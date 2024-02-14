@@ -1,0 +1,38 @@
+Server:
+  port: 8084
+
+Spring:
+  application:
+    name: Api-GateWay
+
+  cloud:
+    gateway:
+      routes:
+        - id: Hotel-Client
+          uri: lb://Hotel-Client
+          predicates:
+            - Path=/api/hotel/**,/api/staff/**
+
+        - id: Rating-Client
+          uri: lb://Rating-Client
+          predicates:
+            - Path=/api/rating/**
+
+        - id: User-Client
+          uri: lb://User-Client
+          predicates:
+            - Path=/api/user/**
+
+
+
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+
